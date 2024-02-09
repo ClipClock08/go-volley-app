@@ -11,8 +11,11 @@ func (app *application) routes() http.Handler {
 	mux := chi.NewRouter()
 
 	mux.Use(middleware.Recoverer)
+	mux.Use(app.enableCORS)
 
 	mux.Get("/", app.Home)
-	
+
+	mux.Get("/seasons", app.AllSeasons)
+
 	return mux
 }
