@@ -3,14 +3,14 @@ import {useState} from "react";
 import Alert from "./components/Alert";
 
 function App() {
-    const [jwToken, setJwToken] = useState("")
+    const [jwtToken, setJwtToken] = useState("")
     const [alertMessage, setAlertMessage] = useState("")
     const [alertClassName, setAlertClassName] = useState("d-none")
 
     const navigate = useNavigate()
 
     const logOut = () => {
-        setJwToken("")
+        setJwtToken("")
         navigate("/login")
     }
 
@@ -21,7 +21,7 @@ function App() {
                     <h1 className={"mt-3"}>Go Volley App</h1>
                 </div>
                 <div className="col text-end">
-                    {jwToken === ""
+                    {jwtToken === ""
                         ? <Link to="/login"><span className={"badge bg-success"}>Login</span></Link>
                         : <a href="#!" onClick={logOut}><span className="badge bg-danger">Logout</span></a>
                     }
@@ -36,7 +36,7 @@ function App() {
                             <Link to="/seasons" className={"list-group-item list-group-item-action"}>Seasons</Link>
                             <Link to="/teams" className={"list-group-item list-group-item-action"}>Teams</Link>
                             <Link to="/schedule" className={"list-group-item list-group-item-action"}>Schedule</Link>
-                            {jwToken !== "" &&
+                            {jwtToken !== "" &&
                                 <>
                                     <Link to="/admin" className={"list-group-item list-group-item-action"}>Admin</Link>
                                     <Link to="/graphql"
@@ -49,8 +49,8 @@ function App() {
                 <div className="col-md-10">
                     <Alert message={alertMessage} className={alertClassName}/>
                     <Outlet context={{
-                        jwToken,
-                        setJwToken,
+                        jwtToken,
+                        setJwtToken,
                         setAlertClassName,
                         setAlertMessage
                     }}/>
