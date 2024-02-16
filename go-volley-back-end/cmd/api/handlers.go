@@ -1,8 +1,7 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
+	"log"
 	"net/http"
 )
 
@@ -17,58 +16,58 @@ func (app *application) Home(w http.ResponseWriter, r *http.Request) {
 		Version: "0.0.1 Beta",
 	}
 
-	out, err := json.Marshal(payload)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-
-	_, err = w.Write(out)
-	if err != nil {
-		fmt.Println(err)
-	}
+	_ = app.writeJson(w, http.StatusOK, payload)
 }
 
 func (app *application) AllSeasons(w http.ResponseWriter, r *http.Request) {
 	seasons, err := app.DB.AllSeasons()
 	if err != nil {
-		fmt.Println(err)
+		app.errorJSON(w, err)
 		return
 	}
 
-	out, err := json.Marshal(seasons)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-
-	_, err = w.Write(out)
-	if err != nil {
-		fmt.Println(err)
-	}
+	_ = app.writeJson(w, http.StatusOK, seasons)
 }
 
 func (app *application) AllTeams(w http.ResponseWriter, r *http.Request) {
 	teams, err := app.DB.AllTeams()
 	if err != nil {
-		fmt.Println(err)
+		app.errorJSON(w, err)
 		return
 	}
 
-	out, err := json.Marshal(teams)
-	if err != nil {
-		fmt.Println(err)
+	_ = app.writeJson(w, http.StatusOK, teams)
+}
+
+func (app *application) authenticate(w http.ResponseWriter, r *http.Request) {
+	// read JSON payload
+	var requestedPayload struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-
-	_, err = w.Write(out)
+	err := app.readJSON(w, r, requestedPayload)
 	if err != nil {
-		fmt.Println(err)
+		app.errorJSON(w, err, http.StatusBadRequest)
+		return
 	}
+
+	// create a jwt user
+	u := jwtUser{
+		ID:        1,
+		FirstName: "Admin",
+		LastName:  "User",
+	}
+
+	// generate token
+	tokens, err := app.auth.GenerateTokenPair(&u)
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+	log.Println(tokens.Token)
+	refreshCookie := app.auth.GetRefreshCookie(tokens.RefreshToken)
+	http.SetCookie(w, refreshCookie)
+
+	w.Write([]byte(tokens.Token))
 }
