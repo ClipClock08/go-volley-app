@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/go-volley-app/static/css/main.41298b15.css",
+    "main.js": "/go-volley-app/static/js/main.22714ac6.js",
+    "static/media/vol.jpg": "/go-volley-app/static/media/vol.ae94c1284f1ef2b3df2f.jpg",
+    "index.html": "/go-volley-app/index.html",
+    "main.41298b15.css.map": "/go-volley-app/static/css/main.41298b15.css.map",
+    "main.22714ac6.js.map": "/go-volley-app/static/js/main.22714ac6.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.41298b15.css",
+    "static/js/main.22714ac6.js"
+  ]
+}
