@@ -29,7 +29,7 @@ type TokenPairs struct {
 	RefreshToken string `json:"refresh_token"`
 }
 
-type Claim struct {
+type Claims struct {
 	jwt.RegisteredClaims
 }
 

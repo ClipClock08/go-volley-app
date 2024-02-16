@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/go-chi/chi/v5/middleware"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 )
 
 func (app *application) routes() http.Handler {
@@ -15,7 +15,8 @@ func (app *application) routes() http.Handler {
 
 	mux.Get("/", app.Home)
 
-	mux.Get("/authenticate", app.authenticate)
+	mux.Post("/authenticate", app.authenticate)
+	mux.Get("/refresh", app.refreshToken)
 
 	mux.Get("/seasons", app.AllSeasons)
 
