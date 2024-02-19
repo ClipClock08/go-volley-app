@@ -14,7 +14,7 @@ const Seasons = () => {
             headers: headers
         }
 
-        fetch(`http://localhost:8080/seasons`, requestOptions)
+        fetch(`${process.env.REACT_APP_BACKEND}/seasons`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 setSeasons(data)

@@ -10,6 +10,9 @@ CREATE TABLE matches
     season_id  INT,
     stadium_id INT,
     referee_id INT,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW(),
+
     FOREIGN KEY (team_1_id) REFERENCES teams (id),
     FOREIGN KEY (team_2_id) REFERENCES teams (id),
     FOREIGN KEY (winner_id) REFERENCES teams (id),

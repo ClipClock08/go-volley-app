@@ -7,6 +7,9 @@ CREATE TABLE sets
     winning_team_id INT,
     team_1_score    INT,
     team_2_score    INT,
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW(),
+
     FOREIGN KEY (match_id) REFERENCES matches (id),
     FOREIGN KEY (winning_team_id) REFERENCES teams (id)
 );

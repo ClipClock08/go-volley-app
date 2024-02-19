@@ -11,6 +11,7 @@ import ManagePage from "./components/ManagePage";
 import GraphQL from "./components/GraphQL";
 import Login from "./components/Login";
 import Season from "./components/Season";
+import Team from "./components/Team";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
             {
                 path: "/teams",
                 element: <Teams/>
+            },
+            {
+                path: "/teams/:id",
+                element: <Team/>
             },
             {
                 path: "/schedule",

@@ -19,6 +19,7 @@ func (app *application) routes() http.Handler {
 	mux.Get("/refresh", app.refreshToken)
 
 	mux.Get("/seasons", app.AllSeasons)
+	mux.Get("/teams", app.AllTeams)
 
 	return mux
 }

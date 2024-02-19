@@ -11,8 +11,8 @@ const Seasons = () => {
             id: 1,
             title: "Класичний волейбол 2023-2024",
             details: "",
-            start_year: "02.10.2023",
-            end_year: ""
+            start_year: 2023,
+            end_year: 2024
         }
         setSeason(mySeason)
     }, [id]);
@@ -130,7 +130,7 @@ const Seasons = () => {
                     <td colSpan="2" rowSpan="2">
                         <p>Чемпіонат волейболу серед
                             громад Богодухівського району
-                            сезону {season.start_date} - {season.end_date || "триває"} </p>
+                            сезону {season.start_year} - {season.end_year || "триває"} </p>
                     </td>
                     <td align="center" colSpan="10">
                         <p>Команди гості</p>
@@ -161,16 +161,36 @@ const Seasons = () => {
                         </div>
                     </td>
                     <td className="col-md-1 empty"></td>
-                    <td className="col-md-1 align-middle"><p>0 - 3</p></td>
-                    <td className="col-md-1 align-middle"><p>0 - 3</p></td>
                     <td className="col-md-1 align-middle">
                         <p>0 - 3</p>
                         <hr/>
                         <p>0 - 3</p>
                     </td>
-                    <td className="col-md-1 align-middle"><p>0 - 3</p></td>
-                    <td className="col-md-1 align-middle"><p>0 - 3</p></td>
-                    <td className="col-md-1 align-middle"><p>0 - 3</p></td>
+                    <td className="col-md-1 align-middle">
+                        <p>0 - 3</p>
+                        <hr/>
+                        <p>-</p>
+                    </td>
+                    <td className="col-md-1 align-middle">
+                        <p>0 - 3</p>
+                        <hr/>
+                        <p>0 - 3</p>
+                    </td>
+                    <td className="col-md-1 align-middle">
+                        <p>0 - 3</p>
+                        <hr/>
+                        <p>1 - 3</p>
+                    </td>
+                    <td className="col-md-1 align-middle">
+                        <p>0 - 3</p>
+                        <hr/>
+                        <p>-</p>
+                    </td>
+                    <td className="col-md-1 align-middle">
+                        <p>0 - 3</p>
+                        <hr/>
+                        <p>-</p>
+                    </td>
                     <td className="col-md-1 align-middle">
                         <p>0 - 3</p>
                         <hr/>
@@ -189,13 +209,15 @@ const Seasons = () => {
                         </div>
                     </td>
                     <td className="col-md-1 align-middle">
-                        <p>3-0</p>
+                        <p>3 - 0</p>
                         <hr/>
-                        <p>3-0</p>
+                        <p>3 - 0</p>
                     </td>
                     <td className="col-md-1 empty"></td>
                     <td className="col-md-1 align-middle">
                         <p>3 - 0</p>
+                        <hr/>
+                        <p>3 - 1</p>
                     </td>
                     <td className="col-md-1 align-middle">
                         <p>1 - 3</p>
@@ -204,18 +226,28 @@ const Seasons = () => {
                     </td>
                     <td className="col-md-1 align-middle">
                         <p>0 - 3</p>
+                        <hr/>
+                        <p> - </p>
                     </td>
-                    <td className="col-md-1 align-middle"><p>3 - 2</p></td>
+                    <td className="col-md-1 align-middle">
+                        <p>3 - 2</p>
+                        <hr/>
+                        <p>3 - 2</p>
+                    </td>
                     <td className="col-md-1 align-middle">
                         <p>3 - 1</p>
                         <hr/>
                         <p>3 - 0</p>
                     </td>
-                    <td className="col-md-1 align-middle"><p>2 - 3</p></td>
                     <td className="col-md-1 align-middle">
-                        <p>3-2</p>
+                        <p>2 - 3</p>
                         <hr/>
-                        <p>3-0</p>
+                        <p> - </p>
+                    </td>
+                    <td className="col-md-1 align-middle">
+                        <p>3 - 2</p>
+                        <hr/>
+                        <p>3 - 0</p>
                     </td>
                 </tr>
                 <tr>

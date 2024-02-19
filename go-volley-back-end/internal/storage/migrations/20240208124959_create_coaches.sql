@@ -9,6 +9,12 @@ CREATE TABLE coaches
     team_id    INT,
     FOREIGN KEY (team_id) REFERENCES teams (id)
 );
+INSERT INTO coaches (first_name, last_name, surname, team_id)
+VALUES ('Іван', 'Іванов', 'Іванович', 1);
+INSERT INTO coaches (first_name, last_name, surname, team_id)
+VALUES ('Іван2', 'Іванов', 'Іванович', 2);
+INSERT INTO coaches (first_name, last_name, surname, team_id)
+VALUES ('Іван3', 'Іванов', 'Іванович', 3);
 -- +goose StatementEnd
 
 -- +goose Down
