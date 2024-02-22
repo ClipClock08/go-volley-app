@@ -12,7 +12,7 @@ const Teams = () => {
             }
         }
 
-        fetch(`${process.env.REACT_APP_BACKEND}/teams`, requestOptions)
+        fetch(`/teams`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 setTeams(data)

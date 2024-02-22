@@ -14,7 +14,7 @@ const Seasons = () => {
             headers: headers
         }
 
-        fetch(`${process.env.REACT_APP_BACKEND}/seasons`, requestOptions)
+        fetch(`/seasons`, requestOptions)
             .then((response) => response.json())
             .then((data) => {
                 setSeasons(data)
@@ -42,7 +42,7 @@ const Seasons = () => {
                             <Link to={`/seasons/${m.id}`}>{m.title}</Link>
                         </td>
                         <td>{m.details}</td>
-                        <td>{m.start_year} - {m.end_year || "in progress"}</td>
+                        <td>{m.start_year} - {m.end_year}</td>
                     </tr>
                 ))}
                 </tbody>

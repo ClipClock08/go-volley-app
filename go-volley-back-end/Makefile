@@ -5,7 +5,7 @@ MIG_DIR = internal/storage/migrations
 .PHONY: goose-status
 
 goose-status:
-	@cd $(MIG_DIR) && goose postgres "user=postgres dbname=$(PROJECT_DB) password=postgres sslmode=disable" status
+	@cd $(MIG_DIR) && goose postgres "host=34.116.199.114 user=postgres dbname=$(PROJECT_DB) password=Lopa081@ sslmode=disable" status
 
 .PHONY: goose-up
 
