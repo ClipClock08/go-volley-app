@@ -1,20 +1,183 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import './Season.css'
 
 const Seasons = () => {
     const [season, setSeason] = useState({})
+    const [ranking, setRanking] = useState({})
+
     let {id} = useParams();
+
+    function sortByPlace(ranking) {
+        const sortedRanking = Object.entries(ranking)
+            .sort(([, a], [, b]) => a.place - b.place)
+            .reduce((acc, [key, value]) => {
+                acc[key] = value;
+                return acc;
+            }, {});
+        return sortedRanking;
+    }
 
     useEffect(() => {
         let mySeason = {
             id: 1,
             title: "Класичний волейбол 2023-2024",
-            details: "",
+            details: "details",
             start_year: 2023,
             end_year: 2024
         }
         setSeason(mySeason)
+
+        let myRanking = {
+            "Valky Team": {
+                city: "Валки",
+                points: {
+                    won: 0,
+                    lost: 0
+                },
+                setsRes: {
+                    "3-0": 0,
+                    "3-1": 0,
+                    "3-2": 0,
+                    "2-3": 1,
+                    "1-3": 1,
+                    "0-3": 11,
+                },
+                place: 9
+            },
+            "StM": {
+                city: "Ст. Мерчик",
+                points: {
+                    won: 1163,
+                    lost: 1110
+                },
+                setsRes: {
+                    "3-0": 5,
+                    "3-1": 2,
+                    "3-2": 3,
+                    "2-3": 2,
+                    "1-3": 1,
+                    "0-3": 1,
+                },
+                place: 2
+            },
+            "Авангард": {
+                city: "Люботин",
+                points: {
+                    won: 0,
+                    lost: 0
+                },
+                setsRes: {
+                    "3-0": 1,
+                    "3-1": 2,
+                    "3-2": 1,
+                    "2-3": 3,
+                    "1-3": 3,
+                    "0-3": 3
+                },
+                place: 6
+            },
+            "Авто-Місто": {
+                city: "Краснокутськ",
+                points: {
+                    won: 0,
+                    lost: 0
+                },
+                setsRes: {
+                    "3-0": 5,
+                    "3-1": 3,
+                    "3-2": 5,
+                    "2-3": 0,
+                    "1-3": 1,
+                    "0-3": 0,
+                },
+                place: 1
+            },
+            "Відродження": {
+                city: "Резуненкове",
+                points: {
+                    won: 0,
+                    lost: 0
+                },
+                setsRes: {
+                    "3-0": 5,
+                    "3-1": 2,
+                    "3-2": 0,
+                    "2-3": 2,
+                    "1-3": 3,
+                    "0-3": 1,
+                },
+                place: 5
+            },
+            "ДЮСШ": {
+                city: "Богодухів",
+                points: {
+                    won: 0,
+                    lost: 0
+                },
+                setsRes: {
+                    "3-0": 3,
+                    "3-1": 4,
+                    "3-2": 2,
+                    "2-3": 2,
+                    "1-3": 0,
+                    "0-3": 2,
+                },
+                place: 4
+            },
+            "За Валки": {
+                city: "Валки",
+                points: {
+                    won: 0,
+                    lost: 0
+                },
+                setsRes: {
+                    "3-0": 2,
+                    "3-1": 1,
+                    "3-2": 0,
+                    "2-3": 2,
+                    "1-3": 3,
+                    "0-3": 6,
+                },
+                place: 8
+            },
+            "Коломак": {
+                city: "Коломак",
+                points: {
+                    won: 0,
+                    lost: 0
+                },
+                setsRes: {
+                    "3-0": 6,
+                    "3-1": 1,
+                    "3-2": 2,
+                    "2-3": 2,
+                    "1-3": 1,
+                    "0-3": 1,
+                },
+                place: 3
+            },
+            "Шарівка": {
+                city: "Шарівка",
+                points: {
+                    won: 0,
+                    lost: 0
+                },
+                setsRes: {
+                    "3-0": 1,
+                    "3-1": 1,
+                    "3-2": 2,
+                    "2-3": 3,
+                    "1-3": 3,
+                    "0-3": 3,
+                },
+                place: 7
+            },
+        }
+
+        myRanking = sortByPlace(myRanking);
+        setRanking(myRanking)
+
     }, [id]);
 
     const results = [];
@@ -24,20 +187,19 @@ const Seasons = () => {
             <table className="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <td>Team</td>
-                    <td>Ranking Points</td>
-                    <td colSpan="3">Matches</td>
-                    <td colSpan="2">Sets</td>
-                    <td colSpan="2">Points</td>
-                    <td colSpan="6">Results Breakdown</td>
-                    <td>Set Ratio</td>
-                    <td>Point Ratio</td>
-                    <td>Place</td>
+                    <td>Команда</td>
+                    <td colSpan="3">Матчі</td>
+                    <td colSpan="2">Сети</td>
+                    <td colSpan="2">Очки</td>
+                    <td colSpan="6">Розбивка результатів</td>
+                    <td>Рейтинг сетів</td>
+                    <td>Рейтинг очків</td>
+                    <td>Рейтинг</td>
+                    <td>Місце</td>
                 </tr>
                 <tr>
                     <td></td>
-                    <td></td>
-                    <td>Played</td>
+                    <td>Total</td>
                     <td>Won</td>
                     <td>Lost</td>
                     <td>Won</td>
@@ -56,56 +218,32 @@ const Seasons = () => {
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td><p>"Valky Team" Валки</p></td>
-                    <td>1</td>
-                    <td>12</td>
-                    <td>0</td>
-                    <td>12</td>
-                    <td>2</td>
-                    <td>36</td>
-                    <td>--</td>
-                    <td>--</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>1</td>
-                    <td>0</td>
-                    <td>11</td>
-                    <td>0,05</td>
-                    <td>--</td>
-                    <td>9</td>
-                </tr>
-                <tr>
-                    <td><p>"StM" Ст. Мерчик</p></td>
-                </tr>
-                <tr>
-                    <td><p>"Авангард" Люботин</p></td>
-                </tr>
-                <tr>
-                    <td><p>"Авто-Місто" Краснокутськ</p></td>
-                </tr>
-                <tr>
-                    <td><p>"Відродження" Резуненкове</p></td>
-                </tr>
-                <tr>
-                    <td><p>"ДЮСШ" Богодухів</p></td>
-                </tr>
-                <tr>
-                    <td><p>"За Валки" Валки</p></td>
-                </tr>
-                <tr>
-                    <td><p>"Коломак" Коломак</p></td>
-                </tr>
-                <tr>
-                    <td><p>"Шарівка" Шарівка</p></td>
-                </tr>
+                {Object.entries(ranking).map(([key, subject], i) => (
+                    <tr key={i}>
+                        <td>{`"${key}" ${subject.city}`}</td>
+                        <td>{subject.setsRes["3-0"] + subject.setsRes["3-1"] + subject.setsRes["3-2"] + subject.setsRes["2-3"] + subject.setsRes["1-3"] + subject.setsRes["0-3"]}</td>
+                        <td>{subject.setsRes["3-0"] + subject.setsRes["3-1"] + subject.setsRes["3-2"]}</td>
+                        <td>{subject.setsRes["2-3"] + subject.setsRes["1-3"] + subject.setsRes["0-3"]}</td>
+                        <td>{subject.setsRes["3-0"] * 3 + subject.setsRes["3-1"] * 3 + subject.setsRes["3-2"] * 3 + subject.setsRes["2-3"] * 2 + +subject.setsRes["1-3"]}</td>
+                        <td>{subject.setsRes["3-1"] + subject.setsRes["3-2"] * 2 + subject.setsRes["2-3"] * 3 + subject.setsRes["1-3"] * 3 + subject.setsRes["0-3"] * 3}</td>
+                        <td>{subject.points.won}</td>
+                        <td>{subject.points.lost}</td>
+                        {Object.entries(subject.setsRes).map(([key, set], i) => (
+                            <td>{set}</td>
+                        ))}
+
+                        <td>{((subject.setsRes["3-0"] * 3 + subject.setsRes["3-1"] * 3 + subject.setsRes["3-2"] * 3 + subject.setsRes["2-3"] * 2 + +subject.setsRes["1-3"]) / (subject.setsRes["3-1"] + subject.setsRes["3-2"] * 2 + subject.setsRes["2-3"] * 3 + subject.setsRes["1-3"] * 3 + subject.setsRes["0-3"] * 3)).toFixed(2)}</td>
+                        <td>{(subject.points.won / subject.points.lost).toFixed(2)}</td>
+                        <td>{subject.setsRes["3-0"] * 3 + subject.setsRes["3-1"] * 3 + subject.setsRes["3-2"] * 2 + subject.setsRes["2-3"] * 1}</td>
+                        <td>{subject.place}</td>
+                    </tr>
+                ))}
                 </tbody>
             </table>
         </div>
         <div className="table">
-            <h2>Season: {season.title}</h2>
-            <small><em>season from {season.start_date} to {season.end_date || "in progress"}</em></small>
+            <h2>Сезон: {season.title}</h2>
+            <small><em>{season.details} </em></small>
             <hr/>
             <table border="0" cellPadding="10" cellSpacing="0"
                    className="table table-striped table-hover">
@@ -133,26 +271,18 @@ const Seasons = () => {
                             сезону {season.start_year} - {season.end_year || "триває"} </p>
                     </td>
                     <td align="center" colSpan="10">
-                        <p>Команди гості</p>
+                        <p>Команди</p>
                     </td>
                 </tr>
                 <tr>
-                    <td className="col-md-1 align-middle"><p>"Valky Team"</p></td>
-                    <td className="col-md-1 align-middle"><p>"StM"</p></td>
-                    <td className="col-md-1 align-middle"><p>"Авангард"</p></td>
-                    <td className="col-md-1 align-middle"><p>"Авто-Місто"</p></td>
-                    <td className="col-md-1 align-middle"><p>"Відродження"</p></td>
-                    <td className="col-md-1 align-middle"><p>"ДЮСШ"</p></td>
-                    <td className="col-md-1 align-middle"><p>"За Валки"</p></td>
-                    <td className="col-md-1 align-middle"><p>"Коломак"</p></td>
-                    <td className="col-md-1 align-middle"><p>"Шарівка"</p></td>
+                    {Object.entries(ranking).map(([key, subject], i) => (
+                        <td className="col-md-1 align-middle"><p>{key}</p></td>
+                    ))}
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td rowSpan="10" align="center" className="align-text-top">
-                        <div><p>Команди господарі</p></div>
-                    </td>
+                    <td rowSpan="10"></td>
                 </tr>
                 <tr>
                     <td className="col-md-3">
@@ -257,7 +387,11 @@ const Seasons = () => {
                         </div>
                     </td>
                     <td className="col-md-1 align-middle"><p>3 - 0</p></td>
-                    <td className="col-md-1 align-middle"><p>0 - 3</p></td>
+                    <td className="col-md-1 align-middle">
+                        <p>0 - 3</p>
+                        <hr/>
+                        <p>1 - 3</p>
+                    </td>
                     <td className="col-md-1 empty"></td>
                     <td className="col-md-1 align-middle">
                         <p>2 - 3</p>
@@ -271,8 +405,16 @@ const Seasons = () => {
                         <hr/>
                         <p>3 - 2</p>
                     </td>
-                    <td className="col-md-1 align-middle"><p>2 - 3</p></td>
-                    <td className="col-md-1 align-middle"><p>3 - 1</p></td>
+                    <td className="col-md-1 align-middle">
+                        <p>2 - 3</p>
+                        <hr/>
+                        <p>2 - 3</p>
+                    </td>
+                    <td className="col-md-1 align-middle">
+                        <p>3 - 1</p>
+                        <hr/>
+                        <p>3 - 1</p>
+                    </td>
                 </tr>
                 <tr>
                     <td className="col-md-3">
@@ -296,11 +438,31 @@ const Seasons = () => {
                         <p>3 - 1</p>
                     </td>
                     <td className="col-md-1 empty"></td>
-                    <td className="col-md-1 align-middle"><p>3 - 0</p></td>
-                    <td className="col-md-1 align-middle"><p>1 - 3</p></td>
-                    <td className="col-md-1 align-middle"><p>3 - 1</p></td>
-                    <td className="col-md-1 align-middle"><p>3 - 2</p></td>
-                    <td className="col-md-1 align-middle"><p>3 - 0</p></td>
+                    <td className="col-md-1 align-middle">
+                        <p>3 - 0</p>
+                        <hr/>
+                        <p>3 - 2</p>
+                    </td>
+                    <td className="col-md-1 align-middle">
+                        <p>1 - 3</p>
+                        <hr/>
+                        <p> - </p>
+                    </td>
+                    <td className="col-md-1 align-middle">
+                        <p>3 - 1</p>
+                        <hr/>
+                        <p>3 - 0</p>
+                    </td>
+                    <td className="col-md-1 align-middle">
+                        <p>3 - 2</p>
+                        <hr/>
+                        <p> - </p>
+                    </td>
+                    <td className="col-md-1 align-middle">
+                        <p>3 - 0</p>
+                        <hr/>
+                        <p>3 - 2</p>
+                    </td>
                 </tr>
                 <tr>
                     <td className="col-md-3">
@@ -308,17 +470,29 @@ const Seasons = () => {
                             <p>"Відродження" Резуненкове</p>
                         </div>
                     </td>
-                    <td className="col-md-1 align-middle"><p>3 - 0</p></td>
+                    <td className="col-md-1 align-middle">
+                        <p>3 - 0</p>
+                        <hr/>
+                        <p>3 - 1</p>
+                    </td>
                     <td className="col-md-1 align-middle"><p>3 - 0</p></td>
                     <td className="col-md-1 align-middle"><p>3 - 1</p></td>
-                    <td className="col-md-1 align-middle"><p>0 - 3</p></td>
+                    <td className="col-md-1 align-middle">
+                        <p>0 - 3</p>
+                        <hr/>
+                        <p>2 - 3</p>
+                    </td>
                     <td className="col-md-1 empty"></td>
                     <td className="col-md-1 align-middle">
                         <p>3 - 0</p>
                         <hr/>
                         <p>1 - 3</p>
                     </td>
-                    <td className="col-md-1 align-middle"><p>3 - 0</p></td>
+                    <td className="col-md-1 align-middle">
+                        <p>3 - 0</p>
+                        <hr/>
+                        <p>1 - 3</p>
+                    </td>
                     <td className="col-md-1 align-middle">
                         <p>3 - 0</p>
                         <hr/>
@@ -333,7 +507,11 @@ const Seasons = () => {
                         </div>
                     </td>
                     <td className="col-md-1 align-middle"><p>3 - 0</p></td>
-                    <td className="col-md-1 align-middle"><p>2 - 3</p></td>
+                    <td className="col-md-1 align-middle">
+                        <p>2 - 3</p>
+                        <hr/>
+                        <p>2 - 3</p>
+                    </td>
                     <td className="col-md-1 align-middle"><p>3 - 0</p></td>
                     <td className="col-md-1 align-middle"><p>3 - 1</p></td>
                     <td className="col-md-1 align-middle">
@@ -352,7 +530,11 @@ const Seasons = () => {
                         <hr/>
                         <p>0 - 3</p>
                     </td>
-                    <td className="col-md-1 align-middle"><p>3 - 2</p></td>
+                    <td className="col-md-1 align-middle">
+                        <p>3 - 2</p>
+                        <hr/>
+                        <p>3 - 1</p>
+                    </td>
                 </tr>
                 <tr>
                     <td className="col-md-3">
@@ -371,15 +553,27 @@ const Seasons = () => {
                         <hr/>
                         <p>2 - 3</p>
                     </td>
-                    <td className="col-md-1 align-middle"><p>1 - 3</p></td>
-                    <td className="col-md-1 align-middle"><p>0 - 3</p></td>
+                    <td className="col-md-1 align-middle">
+                        <p>1 - 3</p>
+                        <hr/>
+                        <p>0 - 3</p>
+                    </td>
+                    <td className="col-md-1 align-middle">
+                        <p>0 - 3</p>
+                        <hr/>
+                        <p>3 - 1</p>
+                    </td>
                     <td className="col-md-1 align-middle">
                         <p>0 - 3</p>
                         <hr/>
                         <p>2 - 3</p>
                     </td>
                     <td className="col-md-1 empty"></td>
-                    <td className="col-md-1 align-middle"><p>0 - 3</p></td>
+                    <td className="col-md-1 align-middle">
+                        <p>0 - 3</p>
+                        <hr/>
+                        <p>0 - 3</p>
+                    </td>
                     <td className="col-md-1 align-middle"><p>1 - 3</p></td>
                 </tr>
                 <tr>
@@ -394,7 +588,11 @@ const Seasons = () => {
                         <p>3-0</p>
                     </td>
                     <td className="col-md-1 align-middle"><p>3 - 2</p></td>
-                    <td className="col-md-1 align-middle"><p>3 - 2</p></td>
+                    <td className="col-md-1 align-middle">
+                        <p>3 - 2</p>
+                        <hr/>
+                        <p>2 - 3</p>
+                    </td>
                     <td className="col-md-1 align-middle">
                         <p>2 - 3</p>
                     </td>
@@ -409,6 +607,8 @@ const Seasons = () => {
                         <p>3 - 0</p>
                     </td>
                     <td className="col-md-1 align-middle">
+                        <p>3 - 0</p>
+                        <hr/>
                         <p>3 - 0</p>
                     </td>
                     <td className="col-md-1 empty"></td>
@@ -434,14 +634,22 @@ const Seasons = () => {
                     </td>
                     <td className="col-md-1 align-middle">
                         <p>1 - 3</p>
+                        <hr/>
+                        <p>1 - 3</p>
                     </td>
                     <td className="col-md-1 align-middle">
                         <p>0 - 3</p>
+                        <hr/>
+                        <p>2 - 3</p>
                     </td>
                     <td className="col-md-1 align-middle">
                         <p>3 - 2</p>
                     </td>
-                    <td className="col-md-1 align-middle"><p>2 - 3</p></td>
+                    <td className="col-md-1 align-middle">
+                        <p>2 - 3</p>
+                        <hr/>
+                        <p>1 - 3</p>
+                    </td>
                     <td className="col-md-1 align-middle">
                         <p>3 - 1</p>
                     </td>

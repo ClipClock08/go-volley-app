@@ -36,6 +36,13 @@ const Seasons = () => {
                 </tr>
                 </thead>
                 <tbody>
+                <tr>
+                    <td>
+                        <Link to="/seasons/1">Тест</Link>
+                    </td>
+                    <td>"Класичний волейбол"</td>
+                    <td>2023 - 2024</td>
+                </tr>
                 {seasons.map((m) => (
                     <tr key={m.id}>
                         <td>
