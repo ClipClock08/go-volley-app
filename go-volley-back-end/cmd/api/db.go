@@ -1,9 +1,11 @@
-package main
+package api
 
 import (
 	"database/sql"
 	"log"
+)
 
+import (
 	_ "github.com/jackc/pgconn"
 	_ "github.com/jackc/pgx/v5"
 	_ "github.com/jackc/pgx/v5/stdlib"
@@ -23,7 +25,7 @@ func openDB(dsn string) (*sql.DB, error) {
 	return db, nil
 }
 
-func (app *application) connectToDB() (*sql.DB, error) {
+func (app *Application) ConnectToDB() (*sql.DB, error) {
 	connection, err := openDB(app.DSN)
 	if err != nil {
 		return nil, err

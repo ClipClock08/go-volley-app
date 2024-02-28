@@ -1,32 +1,21 @@
 package main
 
 import (
+	"backend/cmd/api"
 	"flag"
 	"fmt"
 	"log"
 	"net/http"
 	"time"
 
-	"backend/internal/repository"
 	"backend/internal/repository/dbrepo"
 )
 
 const port = 8080
 
-type application struct {
-	DSN          string
-	Domain       string
-	DB           repository.DatabaseRepo
-	auth         Auth
-	JWTSecret    string
-	JWTIssuer    string
-	JWTAudience  string
-	CookieDomain string
-}
-
 func main() {
 	// app configs
-	var app application
+	var app api.Application
 
 	// read from cmd
 	flag.StringVar(&app.DSN, "dsn", "host=localhost port=5432 user=postgres password=postgres dbname=volley_valky sslmode=disable timezone=UTC connect_timeout=5", "Postgres connection string")
@@ -38,7 +27,7 @@ func main() {
 	flag.Parse()
 
 	//connect to db
-	conn, err := app.connectToDB()
+	conn, err := app.ConnectToDB()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -46,7 +35,7 @@ func main() {
 	app.DB = &dbrepo.PostgresDBRepo{DB: conn}
 	defer func() { _ = app.DB.Connection().Close() }()
 
-	app.auth = Auth{
+	app.Auth = api.Auth{
 		Issuer:        app.JWTIssuer,
 		Audience:      app.JWTAudience,
 		Secret:        app.JWTSecret,
@@ -62,7 +51,7 @@ func main() {
 
 	http.HandleFunc("/", app.Home)
 
-	err = http.ListenAndServe(fmt.Sprintf(":%d", port), app.routes())
+	err = http.ListenAndServe(fmt.Sprintf(":%d", port), app.Routes())
 	if err != nil {
 		log.Fatal(err)
 	}

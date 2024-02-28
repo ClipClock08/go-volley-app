@@ -1,6 +1,7 @@
-package main
+package api
 
 import (
+	"backend/internal/repository"
 	"errors"
 	"github.com/golang-jwt/jwt/v5"
 	"log"
@@ -8,7 +9,18 @@ import (
 	"strconv"
 )
 
-func (app *application) Home(w http.ResponseWriter, r *http.Request) {
+type Application struct {
+	DSN          string
+	Domain       string
+	DB           repository.DatabaseRepo
+	Auth         Auth
+	JWTSecret    string
+	JWTIssuer    string
+	JWTAudience  string
+	CookieDomain string
+}
+
+func (app *Application) Home(w http.ResponseWriter, r *http.Request) {
 	var payload = struct {
 		Status  string `json:"status"`
 		Message string `json:"message"`
@@ -22,7 +34,7 @@ func (app *application) Home(w http.ResponseWriter, r *http.Request) {
 	_ = app.writeJSON(w, http.StatusOK, payload)
 }
 
-func (app *application) AllSeasons(w http.ResponseWriter, r *http.Request) {
+func (app *Application) AllSeasons(w http.ResponseWriter, r *http.Request) {
 	seasons, err := app.DB.AllSeasons()
 	if err != nil {
 		app.errorJSON(w, err)
@@ -32,7 +44,7 @@ func (app *application) AllSeasons(w http.ResponseWriter, r *http.Request) {
 	_ = app.writeJSON(w, http.StatusOK, seasons)
 }
 
-func (app *application) AllTeams(w http.ResponseWriter, r *http.Request) {
+func (app *Application) AllTeams(w http.ResponseWriter, r *http.Request) {
 	teams, err := app.DB.AllTeams()
 	if err != nil {
 		app.errorJSON(w, err)
@@ -42,7 +54,7 @@ func (app *application) AllTeams(w http.ResponseWriter, r *http.Request) {
 	_ = app.writeJSON(w, http.StatusOK, teams)
 }
 
-func (app *application) authenticate(w http.ResponseWriter, r *http.Request) {
+func (app *Application) authenticate(w http.ResponseWriter, r *http.Request) {
 	// read JSON payload
 	var requestedPayload struct {
 		Email    string `json:"email"`
@@ -77,21 +89,21 @@ func (app *application) authenticate(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// generate token
-	tokens, err := app.auth.GenerateTokenPair(&u)
+	tokens, err := app.Auth.GenerateTokenPair(&u)
 	if err != nil {
 		app.errorJSON(w, err)
 		return
 	}
 	log.Println(tokens.Token)
-	refreshCookie := app.auth.GetRefreshCookie(tokens.RefreshToken)
+	refreshCookie := app.Auth.GetRefreshCookie(tokens.RefreshToken)
 	http.SetCookie(w, refreshCookie)
 
 	app.writeJSON(w, http.StatusAccepted, tokens)
 }
 
-func (app *application) refreshToken(w http.ResponseWriter, r *http.Request) {
+func (app *Application) refreshToken(w http.ResponseWriter, r *http.Request) {
 	for _, cookie := range r.Cookies() {
-		if cookie.Name == app.auth.CookieName {
+		if cookie.Name == app.Auth.CookieName {
 			claims := &Claims{}
 			refreshToken := cookie.Value
 
@@ -121,15 +133,30 @@ func (app *application) refreshToken(w http.ResponseWriter, r *http.Request) {
 				LastName:  user.LastName,
 			}
 
-			tokenPairs, err := app.auth.GenerateTokenPair(&u)
+			tokenPairs, err := app.Auth.GenerateTokenPair(&u)
 			if err != nil {
 				app.errorJSON(w, errors.New("error generating token"), http.StatusUnauthorized)
 				return
 			}
 
-			http.SetCookie(w, app.auth.GetRefreshCookie(tokenPairs.RefreshToken))
+			http.SetCookie(w, app.Auth.GetRefreshCookie(tokenPairs.RefreshToken))
 
 			app.writeJSON(w, http.StatusOK, tokenPairs)
 		}
 	}
+}
+
+func (app *Application) logout(w http.ResponseWriter, r *http.Request) {
+	http.SetCookie(w, app.Auth.GeExpiredRefreshCookie())
+	w.WriteHeader(http.StatusAccepted)
+}
+
+func (app *Application) SeasonsCatalog(w http.ResponseWriter, r *http.Request) {
+	seasons, err := app.DB.AllSeasons()
+	if err != nil {
+		app.errorJSON(w, err)
+		return
+	}
+
+	_ = app.writeJSON(w, http.StatusOK, seasons)
 }
