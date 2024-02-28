@@ -1,8 +1,8 @@
 # Use the official Go image as the base image
-FROM golang:1.19-alpine
+FROM golang:1.22-alpine
 
 # Set the working directory inside the container
-WORKDIR /go-volley-back-end
+WORKDIR /goapp
 
 # Copy the Go module files
 COPY go.mod go.sum ./

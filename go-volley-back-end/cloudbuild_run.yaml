@@ -1,6 +1,0 @@
-steps:
-  - name: "gcr.io/cloud-builders/docker"
-    args: [ "build", "-t", "gcr.io/valky-volley-2024/go-volley", ".", "-f", "Dockerfile" ]
-
-  - name: "gcr.io/cloud-builders/docker"
-    args: [ "push", "gcr.io/valky-volley-2024/go-volley" ]

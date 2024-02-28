@@ -45,6 +45,13 @@ const Seasons = () => {
                         <td>{m.start_year} - {m.end_year}</td>
                     </tr>
                 ))}
+                <tr>
+                    <td>
+                        <Link to={`/seasons/123`}>Тестовий запис</Link>
+                    </td>
+                    <td>Класичний волейбол</td>
+                    <td>2023 - 2024</td>
+                </tr>
                 </tbody>
             </table>
         </div>

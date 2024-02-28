@@ -2,25 +2,82 @@ import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import './Season.css'
 
-const Seasons = () => {
+const Season = () => {
     const [season, setSeason] = useState({})
+    const [result, setResult] = useState([])
     let {id} = useParams();
 
     useEffect(() => {
-        let mySeason = {
-            id: 1,
-            title: "Класичний волейбол 2023-2024",
-            details: "",
-            start_year: 2023,
-            end_year: 2024
+        const headers = new Headers();
+
+        headers.append("Content-Type", "application/json")
+
+        const requestOptions = {
+            method: "GET",
+            headers: headers
         }
-        setSeason(mySeason)
+
+        fetch(`/seasons/${id}`, requestOptions)
+            .then((response) => response.json())
+            .then((data) => {
+                setSeason(data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+        fetch(`/seasonResult`, requestOptions)
+            .then((response) => response.json())
+            .then((data) => {
+                setResult(data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }, [id]);
 
-    const results = [];
+    let mySeason = {
+        id: 123,
+        title: "Тестовий запис",
+        details: "Класичний волейбол",
+        start_year: 2023,
+        end_year: 2024
+    }
+    setSeason(mySeason)
 
+    let testRes = [
+        {
+            team: "Valky Team"
+        },
+        {
+            team: "StM"
+        },
+        {
+            team: "Valky Team"
+        },
+        {
+            team: "StM"
+        },
+        {
+            team: "Valky Team"
+        },
+        {
+            team: "StM"
+        },
+        {
+            team: "Valky Team"
+        },
+        {
+            team: "StM"
+        },
+        {
+            team: "StM"
+        }
+    ]
+
+    setResult(testRes)
     return <>
-        <div className="table">
+        <div>
             <table className="table table-striped table-hover">
                 <thead>
                 <tr>
@@ -56,6 +113,9 @@ const Seasons = () => {
                 </tr>
                 </thead>
                 <tbody>
+                {result.map((m) => (
+                    <tr key={m.team}></tr>
+                ))}
                 <tr>
                     <td><p>"Valky Team" Валки</p></td>
                     <td>1</td>
@@ -452,6 +512,6 @@ const Seasons = () => {
             </table>
         </div>
     </>
-}
+};
 
-export default Seasons
+export default Season

@@ -10,6 +10,8 @@ CREATE TABLE users
     created_at TIMESTAMP DEFAULT NOW(),
     updated_at TIMESTAMP DEFAULT NOW()
 );
+insert into users (first_name, last_name, email, password)
+VALUES ('Admin', 'Admin', 'admin@example.com', '$2a$14$wVsaPvJnJJsomWArouWCtusem6S/.Gauq/GjOIEHpyh2DAMmso1wy');
 -- +goose StatementEnd
 
 -- +goose Down

@@ -51,7 +51,7 @@ function App() {
                         console.log("user is not logged in");
                     })
             }, 600000);
-            setTickInterval(i);
+            setTickInterval(tickInterval);
             console.log("setting tick interval to", i);
         } else {
             console.log("turning off ticking");
@@ -86,12 +86,12 @@ function App() {
         <div className={"container"}>
             <div className={"row"}>
                 <div className="col">
-                    <h1 className={"mt-3"}>Go Volley App</h1>
+                    <h1 className="mb-3">Федерація волейболу Валківської області</h1>
                 </div>
                 <div className="col text-end">
                     {jwtToken === ""
-                        ? <Link to="/login"><span className={"badge bg-success"}>Login</span></Link>
-                        : <a href="#!" onClick={logOut}><span className="badge bg-danger">Logout</span></a>
+                        ? <Link to="/login"><span className={"badge bg-success"}>Увійти</span></Link>
+                        : <a href="#!" onClick={logOut}><span className="badge bg-danger">Вихід</span></a>
                     }
                 </div>
                 <hr className={"mb-3"}/>
@@ -100,13 +100,13 @@ function App() {
                 <div className="col-md-2">
                     <nav>
                         <div className="list-group">
-                            <Link to="/" className={"list-group-item list-group-item-action"}>Home</Link>
-                            <Link to="/seasons" className={"list-group-item list-group-item-action"}>Seasons</Link>
-                            <Link to="/teams" className={"list-group-item list-group-item-action"}>Teams</Link>
-                            <Link to="/schedule" className={"list-group-item list-group-item-action"}>Schedule</Link>
+                            <Link to="/" className={"list-group-item list-group-item-action"}>Головна</Link>
+                            <Link to="/seasons" className={"list-group-item list-group-item-action"}>Сезони</Link>
+                            <Link to="/teams" className={"list-group-item list-group-item-action"}>Команди</Link>
+                            <Link to="/schedule" className={"list-group-item list-group-item-action"}>Розклад</Link>
                             {jwtToken !== "" &&
                                 <>
-                                    <Link to="/admin" className={"list-group-item list-group-item-action"}>Admin</Link>
+                                    <Link to="/admin" className={"list-group-item list-group-item-action"}>Адмін панель</Link>
                                     <Link to="/graphql"
                                           className={"list-group-item list-group-item-action"}>GraphQL</Link>
                                 </>

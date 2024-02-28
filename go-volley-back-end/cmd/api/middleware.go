@@ -1,8 +1,8 @@
-package main
+package api
 
 import "net/http"
 
-func (app *application) enableCORS(h http.Handler) http.Handler {
+func (app *Application) enableCORS(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "http://*")
 
@@ -14,5 +14,16 @@ func (app *application) enableCORS(h http.Handler) http.Handler {
 		} else {
 			h.ServeHTTP(w, r)
 		}
+	})
+}
+
+func (app *Application) authRequired(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
+		_, _, err := app.Auth.GetTokenFromHeaderAndVerify(writer, request)
+		if err != nil {
+			writer.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		next.ServeHTTP(writer, request)
 	})
 }
