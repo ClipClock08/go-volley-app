@@ -1,31 +1,33 @@
 import {Link, Outlet, useNavigate} from "react-router-dom";
 import {useCallback, useEffect, useState} from "react";
 import Alert from "./components/Alert";
+import Footer from "./components/Footer";
 
 function App() {
-    const [jwtToken, setJwtToken] = useState("")
-    const [alertMessage, setAlertMessage] = useState("")
-    const [alertClassName, setAlertClassName] = useState("d-none")
+    const [jwtToken, setJwtToken] = useState("");
+    const [alertMessage, setAlertMessage] = useState("");
+    const [alertClassName, setAlertClassName] = useState("d-none");
 
-    const [tickInterval, setTickInterval] = useState()
+    const [tickInterval, setTickInterval] = useState();
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const logOut = () => {
-        const requestObjects = {
+        const requestOptions = {
             method: "GET",
-            credentials: "include"
+            credentials: "include",
         }
-        fetch("/logout", requestObjects)
+
+        fetch(`/logout`, requestOptions)
             .catch(error => {
-                console.log("error logging out", error)
+                console.log("error logging out", error);
             })
             .finally(() => {
-                setJwtToken("")
-                toggleRefresh(false)
+                setJwtToken("");
+                toggleRefresh(false);
             })
 
-        navigate("/login")
+        navigate("/login");
     }
 
     const toggleRefresh = useCallback((status) => {
@@ -51,7 +53,7 @@ function App() {
                         console.log("user is not logged in");
                     })
             }, 600000);
-            setTickInterval(tickInterval);
+            setTickInterval(i);
             console.log("setting tick interval to", i);
         } else {
             console.log("turning off ticking");
@@ -82,50 +84,57 @@ function App() {
         }
     }, [jwtToken, toggleRefresh])
 
-    return (
-        <div className={"container"}>
-            <div className={"row"}>
-                <div className="col">
-                    <h1 className="mb-3">Федерація волейболу Валківської області</h1>
+    return (<>
+            <div className={"container"}>
+                <div className={"row"}>
+                    <div className="col col-sm-8">
+                        <h1 className="mb-3">ВАЛКІВСЬКИЙ ВОЛЕЙБОЛЬНИЙ КЛУБ <br/> ОРГКОМІТЕТ З ВОЛЕЙБОЛУ ВАЛКІВСЬКОЇ
+                            МІСЬКОЇ
+                            ТЕРИТОРІАЛЬНОЇ ГРОМАДИ ХАРКІВСЬКОЇ ОБЛАСТІ
+                        </h1>
+                    </div>
+                    <div className="col text-end">
+                        {jwtToken === ""
+                            ? <Link to="/login"><span className={"badge bg-success"}>Увійти</span></Link>
+                            : <a href="#!" onClick={logOut}><span className="badge bg-danger">Вихід</span></a>
+                        }
+                    </div>
+                    <hr className={"mb-3"}/>
                 </div>
-                <div className="col text-end">
-                    {jwtToken === ""
-                        ? <Link to="/login"><span className={"badge bg-success"}>Увійти</span></Link>
-                        : <a href="#!" onClick={logOut}><span className="badge bg-danger">Вихід</span></a>
-                    }
+                <div className="row">
+                    <div className="col-md-2">
+                        <nav>
+                            <div className="list-group">
+                                <Link to="/" className={"list-group-item list-group-item-action"}>Головна</Link>
+                                <Link to="/seasons" className={"list-group-item list-group-item-action"}>Сезони</Link>
+                                <Link to="/teams" className={"list-group-item list-group-item-action"}>Команди</Link>
+                                <Link to="/schedule"
+                                      className={"list-group-item list-group-item-action"}>Календар</Link>
+                                {jwtToken !== "" &&
+                                    <>
+                                        <Link to="/admin" className={"list-group-item list-group-item-action"}>Адмін
+                                            панель</Link>
+                                        <Link to="/graphql"
+                                              className={"list-group-item list-group-item-action"}>GraphQL</Link>
+                                    </>
+                                }
+                            </div>
+                        </nav>
+                    </div>
+                    <div className="col-md-10">
+                        <Alert message={alertMessage} className={alertClassName}/>
+                        <Outlet context={{
+                            jwtToken,
+                            setJwtToken,
+                            setAlertClassName,
+                            setAlertMessage,
+                            toggleRefresh,
+                        }}/>
+                    </div>
                 </div>
-                <hr className={"mb-3"}/>
             </div>
-            <div className="row">
-                <div className="col-md-2">
-                    <nav>
-                        <div className="list-group">
-                            <Link to="/" className={"list-group-item list-group-item-action"}>Головна</Link>
-                            <Link to="/seasons" className={"list-group-item list-group-item-action"}>Сезони</Link>
-                            <Link to="/teams" className={"list-group-item list-group-item-action"}>Команди</Link>
-                            <Link to="/schedule" className={"list-group-item list-group-item-action"}>Розклад</Link>
-                            {jwtToken !== "" &&
-                                <>
-                                    <Link to="/admin" className={"list-group-item list-group-item-action"}>Адмін панель</Link>
-                                    <Link to="/graphql"
-                                          className={"list-group-item list-group-item-action"}>GraphQL</Link>
-                                </>
-                            }
-                        </div>
-                    </nav>
-                </div>
-                <div className="col-md-10">
-                    <Alert message={alertMessage} className={alertClassName}/>
-                    <Outlet context={{
-                        jwtToken,
-                        setJwtToken,
-                        setAlertClassName,
-                        setAlertMessage,
-                        toggleRefresh
-                    }}/>
-                </div>
-            </div>
-        </div>
+            <Footer/>
+        </>
     );
 }
 

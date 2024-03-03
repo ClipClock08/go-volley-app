@@ -4,7 +4,6 @@ import (
 	"backend/internal/repository"
 	"errors"
 	"github.com/golang-jwt/jwt/v5"
-	"log"
 	"net/http"
 	"strconv"
 )
@@ -55,29 +54,29 @@ func (app *Application) AllTeams(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *Application) authenticate(w http.ResponseWriter, r *http.Request) {
-	// read JSON payload
-	var requestedPayload struct {
+	// read json payload
+	var requestPayload struct {
 		Email    string `json:"email"`
 		Password string `json:"password"`
 	}
 
-	err := app.readJSON(w, r, &requestedPayload)
+	err := app.readJSON(w, r, &requestPayload)
 	if err != nil {
 		app.errorJSON(w, err, http.StatusBadRequest)
 		return
 	}
 
 	// validate user against database
-	user, err := app.DB.GetUserByEmail(requestedPayload.Email)
+	user, err := app.DB.GetUserByEmail(requestPayload.Email)
 	if err != nil {
-		app.errorJSON(w, errors.New("invalid credentials"))
+		app.errorJSON(w, errors.New("invalid credentials"), http.StatusBadRequest)
 		return
 	}
 
 	// check password
-	valid, err := user.PasswordMatches(requestedPayload.Password)
+	valid, err := user.PasswordMatches(requestPayload.Password)
 	if err != nil || !valid {
-		app.errorJSON(w, errors.New("password mismatch"))
+		app.errorJSON(w, errors.New("invalid credentials"), http.StatusBadRequest)
 		return
 	}
 
@@ -88,13 +87,13 @@ func (app *Application) authenticate(w http.ResponseWriter, r *http.Request) {
 		LastName:  user.LastName,
 	}
 
-	// generate token
+	// generate tokens
 	tokens, err := app.Auth.GenerateTokenPair(&u)
 	if err != nil {
 		app.errorJSON(w, err)
 		return
 	}
-	log.Println(tokens.Token)
+
 	refreshCookie := app.Auth.GetRefreshCookie(tokens.RefreshToken)
 	http.SetCookie(w, refreshCookie)
 
@@ -107,14 +106,16 @@ func (app *Application) refreshToken(w http.ResponseWriter, r *http.Request) {
 			claims := &Claims{}
 			refreshToken := cookie.Value
 
+			// parse the token to get the claims
 			_, err := jwt.ParseWithClaims(refreshToken, claims, func(token *jwt.Token) (interface{}, error) {
-				return app.JWTSecret, nil
+				return []byte(app.JWTSecret), nil
 			})
 			if err != nil {
 				app.errorJSON(w, errors.New("unauthorized"), http.StatusUnauthorized)
 				return
 			}
 
+			// get the user id from the token claims
 			userID, err := strconv.Atoi(claims.Subject)
 			if err != nil {
 				app.errorJSON(w, errors.New("unknown user"), http.StatusUnauthorized)
@@ -135,19 +136,20 @@ func (app *Application) refreshToken(w http.ResponseWriter, r *http.Request) {
 
 			tokenPairs, err := app.Auth.GenerateTokenPair(&u)
 			if err != nil {
-				app.errorJSON(w, errors.New("error generating token"), http.StatusUnauthorized)
+				app.errorJSON(w, errors.New("error generating tokens"), http.StatusUnauthorized)
 				return
 			}
 
 			http.SetCookie(w, app.Auth.GetRefreshCookie(tokenPairs.RefreshToken))
 
 			app.writeJSON(w, http.StatusOK, tokenPairs)
+
 		}
 	}
 }
 
 func (app *Application) logout(w http.ResponseWriter, r *http.Request) {
-	http.SetCookie(w, app.Auth.GeExpiredRefreshCookie())
+	http.SetCookie(w, app.Auth.GetExpiredRefreshCookie())
 	w.WriteHeader(http.StatusAccepted)
 }
 

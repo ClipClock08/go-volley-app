@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
+import thumb from './../images/empty_logo.jpg'
 
 const Teams = () => {
     const [teams, setTeams] = useState([])
@@ -28,9 +29,9 @@ const Teams = () => {
         </div>
         <div className="row">
             {teams.map((m) => (
-                <div className="col-lg-4" key={m.id}>
+                <Link to={`/teams/${m.id}`} className="col-lg-4" key={m.id}>
                     <div className="card">
-                        <img src={m.logo} className="card-img-top" alt="..."/>
+                        <img src={m.logo || thumb} className="card-img-top" alt="..."/>
                         <div className="card-body">
                             <h5 className="card-title">{m.name}</h5>
                         </div>
@@ -38,11 +39,8 @@ const Teams = () => {
                             <li className="list-group-item">Заснована: {m.since}</li>
                             <li className="list-group-item">Локація: {m.city_id}</li>
                         </ul>
-                        <div className="card-body">
-                            <Link to={`/teams/${m.id}`} className="card-link">Детальніше</Link>
-                        </div>
                     </div>
-                </div>
+                </Link>
             ))}
         </div>
     </>

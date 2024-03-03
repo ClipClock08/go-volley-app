@@ -41,14 +41,13 @@ const Login = () => {
                     setJwtToken(data.access_token);
                     setAlertClassName("d-none");
                     setAlertMessage("");
-                    toggleRefresh(true)
+                    toggleRefresh(true);
                     navigate("/");
                 }
             })
             .catch(error => {
                 setAlertClassName("alert-danger");
                 setAlertMessage(error);
-                console.log("dasd")
             })
     }
 

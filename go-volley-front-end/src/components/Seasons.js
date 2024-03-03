@@ -25,14 +25,14 @@ const Seasons = () => {
     }, []);
     return <>
         <div className="text-center">
-            <h2>Список турнірів району</h2>
+            <h2>Список турнірів</h2>
             <hr/>
             <table className="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Details</th>
-                    <th>Dates</th>
+                    <th>Назва</th>
+                    <th>Опис</th>
+                    <th>Період</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -47,9 +47,9 @@ const Seasons = () => {
                 ))}
                 <tr>
                     <td>
-                        <Link to={`/seasons/123`}>Тестовий запис</Link>
+                        <Link to={`/seasons/123`}>Чемпіонат Валківської МТГ з класичного волейболу</Link>
                     </td>
-                    <td>Класичний волейбол</td>
+                    <td>турнір проводиться в ліцеї ім. Масельського О.С.</td>
                     <td>2023 - 2024</td>
                 </tr>
                 </tbody>

@@ -12,6 +12,7 @@ import GraphQL from "./components/GraphQL";
 import Login from "./components/Login";
 import Season from "./components/Season";
 import Team from "./components/Team";
+import About from "./components/About";
 
 const router = createBrowserRouter([
     {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
             {
                 path: "/login",
                 element: <Login/>
+            },
+            {
+                path: "/about",
+                element: <About/>
             }
         ]
     },

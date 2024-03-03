@@ -56,10 +56,10 @@ const Season = () => {
                     "3-1": 2,
                     "3-2": 3,
                     "2-3": 2,
-                    "1-3": 1,
+                    "1-3": 2,
                     "0-3": 1,
                 },
-                place: 3
+                place: 4
             },
             "Авангард": {
                 city: "Люботин",
@@ -101,13 +101,13 @@ const Season = () => {
                 },
                 setsRes: {
                     "3-0": 6,
-                    "3-1": 2,
+                    "3-1": 3,
                     "3-2": 0,
                     "2-3": 2,
                     "1-3": 3,
                     "0-3": 1,
                 },
-                place: 5
+                place: 3
             },
             "ДЮСШ": {
                 city: "Богодухів",
@@ -357,7 +357,7 @@ const Season = () => {
                     <td className="col-md-1 align-middle">
                         <p>0 - 3</p>
                         <hr/>
-                        <p> - </p>
+                        <p>1 - 3</p>
                     </td>
                     <td className="col-md-1 align-middle">
                         <p>3 - 2</p>
@@ -479,7 +479,11 @@ const Season = () => {
                         <hr/>
                         <p>3 - 1</p>
                     </td>
-                    <td className="col-md-1 align-middle"><p>3 - 0</p></td>
+                    <td className="col-md-1 align-middle">
+                        <p>3 - 0</p>
+                        <hr/>
+                        <p>3 - 1</p>
+                    </td>
                     <td className="col-md-1 align-middle">
                         <p>3 - 1</p>
                         <hr/>
