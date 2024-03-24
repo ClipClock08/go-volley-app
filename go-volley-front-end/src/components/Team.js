@@ -48,6 +48,9 @@ const Team = () => {
                 </div>
             </div>
         </div>
+        <div className="row">
+            <div className="col">Склад команди:</div>
+        </div>
     </>
 }
 

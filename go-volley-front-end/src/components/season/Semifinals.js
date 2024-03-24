@@ -38,22 +38,22 @@ const Season = () => {
                                     </tr>
                                     </thead>
                                     <tbody className="tournament-bracket__content">
-                                    <tr className="tournament-bracket__team">
+                                    <tr className="tournament-bracket__team tournament-bracket__team--winner">
                                         <td className="tournament-bracket__country">
                                             <abbr className="tournament-bracket__code"
                                                   title="Авто-Місто Краснокутськ">АВТО</abbr>
                                         </td>
                                         <td className="tournament-bracket__score">
-                                            <span className="tournament-bracket__number">-</span>
+                                            <span className="tournament-bracket__number">2</span>
                                         </td>
                                     </tr>
-                                    <tr className="tournament-bracket__team {/*tournament-bracket__team--winner*/}">
+                                    <tr className="tournament-bracket__team">
                                         <td className="tournament-bracket__country">
                                             <abbr className="tournament-bracket__code"
                                                   title="Відродження Резуненкове">ВІДР</abbr>
                                         </td>
                                         <td className="tournament-bracket__score">
-                                            <span className="tournament-bracket__number">-</span>
+                                            <span className="tournament-bracket__number">0</span>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -80,16 +80,16 @@ const Season = () => {
                                                   title="ДЮСШ Богодухів">ДЮСШ</abbr>
                                         </td>
                                         <td className="tournament-bracket__score">
-                                            <span className="tournament-bracket__number">-</span>
+                                            <span className="tournament-bracket__number">0</span>
                                         </td>
                                     </tr>
-                                    <tr className="tournament-bracket__team {/*tournament-bracket__team--winner*/}">
+                                    <tr className="tournament-bracket__team tournament-bracket__team--winner">
                                         <td className="tournament-bracket__country">
                                             <abbr className="tournament-bracket__code"
                                                   title="Коломак Коломак">КОЛО</abbr>
                                         </td>
                                         <td className="tournament-bracket__score">
-                                            <span className="tournament-bracket__number">-</span>
+                                            <span className="tournament-bracket__number">2</span>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -114,26 +114,25 @@ const Season = () => {
                                     </tr>
                                     </thead>
                                     <tbody className="tournament-bracket__content">
-                                    <tr className="tournament-bracket__team {/*tournament-bracket__team--winner*/}">
+                                    <tr className="tournament-bracket__team tournament-bracket__team--winner">
                                         <td className="tournament-bracket__country">
-                                            <abbr className="tournament-bracket__code" title="TBD">TBD</abbr>
+                                            <abbr className="tournament-bracket__code"
+                                                  title="ДЮСШ Богодухів">ДЮСШ</abbr>
                                         </td>
                                         <td className="tournament-bracket__score">
-                                            <span className="tournament-bracket__number">-</span>
-                                            {/*<span
+                                            <span className="tournament-bracket__number">2</span>
+                                            <span
                                                 className="tournament-bracket__medal tournament-bracket__medal--bronze fa fa-trophy"
-                                                aria-label="Bronze medal"></span>*/}
+                                                aria-label="Bronze medal"></span>
                                         </td>
                                     </tr>
                                     <tr className="tournament-bracket__team">
                                         <td className="tournament-bracket__country">
-                                            <abbr className="tournament-bracket__code" title="TBD">TBD</abbr>
+                                            <abbr className="tournament-bracket__code"
+                                                  title="Відродження Резуненкове">ВІДР</abbr>
                                         </td>
                                         <td className="tournament-bracket__score">
-                                            <span className="tournament-bracket__number">-</span>
-                                            {/*<span
-                                                className="tournament-bracket__medal tournament-bracket__medal--bronze fa fa-trophy"
-                                                aria-label="Bronze medal"></span>*/}
+                                            <span className="tournament-bracket__number">1</span>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -158,26 +157,23 @@ const Season = () => {
                                     </tr>
                                     </thead>
                                     <tbody className="tournament-bracket__content">
-                                    <tr className="tournament-bracket__team {/*tournament-bracket__team--winner*/}">
+                                    <tr className="tournament-bracket__team tournament-bracket__team--winner">
                                         <td className="tournament-bracket__country">
-                                            <abbr className="tournament-bracket__code" title="TBD">TBD</abbr>
+                                            <abbr className="tournament-bracket__code" title="Авто-Місто Краснокутськ">АВТО</abbr>
                                         </td>
                                         <td className="tournament-bracket__score">
-                                            <span className="tournament-bracket__number">-</span>
-                                            {/*<span
+                                            <span className="tournament-bracket__number">2</span>
+                                            <span
                                                 className="tournament-bracket__medal tournament-bracket__medal--gold fa fa-trophy"
-                                                aria-label="Gold medal"></span>*/}
+                                                aria-label="Gold medal"></span>
                                         </td>
                                     </tr>
                                     <tr className="tournament-bracket__team">
                                         <td className="tournament-bracket__country">
-                                            <abbr className="tournament-bracket__code" title="TBD">TBD</abbr>
+                                            <abbr className="tournament-bracket__code" title="Коломак Коломак">КОЛО</abbr>
                                         </td>
                                         <td className="tournament-bracket__score">
-                                            <span className="tournament-bracket__number">-</span>
-                                            {/*<span
-                                                className="tournament-bracket__medal tournament-bracket__medal--silver fa fa-trophy"
-                                                aria-label="Silver medal"></span>*/}
+                                            <span className="tournament-bracket__number">1</span>
                                         </td>
                                     </tr>
                                     </tbody>

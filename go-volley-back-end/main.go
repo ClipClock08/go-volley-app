@@ -17,8 +17,9 @@ func main() {
 	// app configs
 	var app api.Application
 
+	connStr := "user=postgres password=postgres dbname=volley_valky host=localhost port=5432 sslmode=disable"
 	// read from cmd
-	flag.StringVar(&app.DSN, "dsn", "host=localhost port=5432 user=postgres password=postgres dbname=volley_valky sslmode=disable timezone=UTC connect_timeout=5", "Postgres connection string")
+	flag.StringVar(&app.DSN, "dsn", connStr, "Postgres connection string")
 	flag.StringVar(&app.JWTSecret, "jwt-secret", "verysecret", "signing secret")
 	flag.StringVar(&app.JWTIssuer, "jwt-issuer", "example.com", "signing issuer")
 	flag.StringVar(&app.JWTAudience, "jwt-audience", "example.com", "signing audience")
